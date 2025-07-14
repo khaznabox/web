@@ -338,26 +338,58 @@
         </section>
 
         <!--sign up section-->
-        <section class="py-7">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7 mx-auto text-center">
-                        <h3>Ready to launch your awesome marketing campaign?</h3>
-                        <div class="divider bg-primary mx-auto"></div>
-                        <p class="text-muted">
-                            Sign up now and try KhaznaBox for 2 weeks. No credit card is required.
-                        </p>
-                        <div class="input-group input-group-lg mt-5">
-                            <input type="text" class="form-control" placeholder="Email address">
-                            <input type="password" class="form-control" placeholder="Password">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section class="py-7">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 mx-auto text-center">
+        <h3>Ready to launch your awesome marketing campaign?</h3>
+        <div class="divider bg-primary mx-auto"></div>
+        <p class="text-muted">
+          Sign up now and try KhaznaBox for 2 weeks. No credit card is required.
+        </p>
+        <div class="input-group input-group-lg mt-5">
+          <input type="text" id="name" class="form-control" placeholder="Your name">
+          <input type="email" id="email" class="form-control" placeholder="Email address">
+          <input type="password" id="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <button class="btn btn-primary" onclick="submitData()">Sign Up</button>
+          </div>
+        </div>
+        <p id="status" style="margin-top:15px;"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwdomozfRdjlt_tgS8NbdbtEKEYAJ0_TZ9jzwq6rCl4AJCBQyo_yloN9Ftcf0A0uN9IgQ/exec';
+
+  function submitData() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!name || !email || !password) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      document.getElementById("status").innerText = "✅ Thank you! Your info has been submitted.";
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      document.getElementById("status").innerText = "❌ Submission failed. Try again later.";
+    });
+  }
+</script>
 
         <!--footer-->
         <footer class="py-6 bg-dark text-white" id="contact">
